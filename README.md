@@ -286,7 +286,7 @@ COUNTROWS(
 ```
 ---
 
-🔷 6. Engagements
+### 🔷 6. Engagements
 
 **Definition:** Engagements represent the total number of user interactions with advertisements, including Clicks, Shares, and Comments.
 
@@ -297,7 +297,7 @@ Engagements = [Shares] + [Clicks] + [Comments]
 ```
 ---
 
-###🔷 7. CTR - Click Through Rate
+### 🔷 7. CTR - Click Through Rate
 
 **Definition:** CTR represents the percentage of impressions that resulted in clicks.
 
@@ -438,6 +438,12 @@ Total Budget → Avg. Budget per Campaign
 
 The **Target Gender Donut Chart** visualizes advertising performance across different gender segments using a dynamically selected KPI. The chart uses `target_gender` from the `ads` table and a **Field Parameter** to switch between Impressions, Engagements, Clicks, Shares, Comments, and Purchases.
 
+<br>
+
+<img width="250" alt="image" src="https://github.com/user-attachments/assets/97640b0d-1ffc-4450-a418-4f08d8284d0f" />
+
+</p>
+
 #### 🔶 Step 1: Create a Field Parameter
 
 Create a Field Parameter named **`Select Dynamic Measure`** containing the following measures:
@@ -533,6 +539,10 @@ The results should be interpreted using the actual chart values. A higher number
 
 The **Target Age Group Bar Chart** visualizes advertising performance across different age groups using a dynamically selected KPI. The chart uses `user_age` to analyze user activity and allows the selected metric to change through the **Select Dynamic Measure** Field Parameter.
 
+<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/e2ffbe90-2db4-4b90-98aa-b18df103b417" />
+</p>
+
 ### 🔶 Step 1: Configure the Bar Chart
 
 The following fields were assigned to the visual:
@@ -591,9 +601,13 @@ The actual chart results should be used to identify the highest-performing ages.
 
 ---
 
-## 🔷 3. Calendar Month — Calendar Heat Map
+## 🔷 3. Calendar Month - Calendar Heat Map
 
 The **Calendar Heat Map** visualizes advertising activity across weeks and days of the week. It uses the `Calendar Table` created from the `ad_events[timestamp]` column to organize event activity into a calendar structure.
+
+<br>
+<img width="200" alt="image" src="https://github.com/user-attachments/assets/93318e2c-8011-4d22-8c9b-54ad6339f5f6" />
+</p>
 
 ### 🔶 Step 1: Configure the Calendar Heat Map
 
@@ -633,9 +647,13 @@ The calendar heat map provides a visual overview of when advertising interaction
 
 ---
 
-## 🔷 4. Weekly Trend — Stacked Column Chart by Ad Type
+## 🔷 4. Weekly Trend - Stacked Column Chart by Ad Type
 
 The **Weekly Trend Stacked Column Chart** visualizes advertising performance across different weeks, with each column divided into individual ad types. A dynamic KPI parameter allows users to switch between different performance metrics and compare the contribution of each ad type over time.
+
+<br>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/86a3b8ce-54b5-469b-8c67-c24044e62603" />
+</p>
 
 ### 🔶 Step 1: Configure the Stacked Column Chart
 
@@ -692,9 +710,74 @@ Business Purpose: Understand weekly performance patterns, compare ad type contri
 
 ---
 
+## 🔷 5. Hourly Trend - Area Chart
+
+The **Hourly Trend Area Chart** visualizes advertising activity across different hours of the day. It uses the `Event Hour` column derived from the `ad_events[timestamp]` field and allows users to dynamically switch between performance metrics using the **Select Dynamic Measure** Field Parameter.
+
+### 🔶 Step 1: Create the Event Hour Column
+
+**Definition:** The `Event Hour` column extracts the hour from the event timestamp and returns a numeric value from **0 to 23**, representing each hour of the day.
+
+```DAX
+Event Hour =
+HOUR(ad_events[timestamp])
+```
+
+🔶 Step 2: Configure the Area Chart
+The following fields are assigned to the visual:
+- X-axis: ad_events[Event Hour]
+- Y-axis: Select Dynamic Measure
+
+The Select Dynamic Measure Field Parameter allows users to switch dynamically between:
+- Impressions
+- Engagements
+- Clicks
+- Shares
+- Comments
+- Purchases
+The X-axis represents the hours from 0 to 23, while the area represents the selected metric's activity during each hour.
+
+🔶 Step 3: Create a Dynamic Chart Title
+Definition: The Hourly Title measure combines the word "Hourly", the selected KPI name, and "Trend" to generate a dynamic chart title.
+
+Hourly Title =
+"Hourly "
+    & SELECTEDVALUE('Select Dynamic Measure'[Dynamic Title])
+    & " Trend"
+
+Examples of Dynamic Titles:
+- Hourly Impressions Trend
+- Hourly Engagements Trend
+- Hourly Clicks Trend
+- Hourly Shares Trend
+- Hourly Comments Trend
+- Hourly Purchases Trend
+Apply the Hourly Title measure through Format visual → Title → Text → fx.
+
+🔶 Step 4: Analyze Hourly Performance
+The area chart helps identify:
+- Peak Activity Hours: Hours with the highest advertising activity.
+- Low-Activity Hours: Periods with comparatively lower activity.
+- Engagement Patterns: How user interactions change throughout the day.
+- Purchase Trends: Hours that generate the highest number of purchase events.
+
+🔶 Step 5: Business Insights
+The chart provides an hourly view of advertising performance, helping identify when users are most active and how activity varies throughout the day.
+
+By switching between KPIs, users can compare the hourly patterns of impressions, engagements, clicks, and purchases.
+
+Business Purpose: Identify high- and low-activity hours to support ad scheduling, campaign timing, and budget optimization.
+
+The actual chart values should determine the peak hours. Higher activity does not necessarily mean higher conversion efficiency or return on advertising spend.
+---
+
 ### 🔷 Ad Type – Matrix
 
 The **Ad Type Matrix** compares advertising performance across different ad formats using multiple engagement and conversion metrics. It helps identify which ad types generate the most impressions, clicks, and efficient engagement and purchase outcomes.
+
+<br>
+<img width="350" alt="image" src="https://github.com/user-attachments/assets/5706c3bf-6089-43a9-b29a-b3fa97e68898" />
+</p>
 
 **Matrix Configuration:**
 - **Rows:** `ads[ad_type]`
