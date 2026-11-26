@@ -33,6 +33,12 @@ The first step was to load the **raw data into Power Query** for data transforma
 
 After completing the data transformation and cleaning process, the next step was to create the **Data Model** and establish relationships between the tables.
 
+<br>
+
+<img width="2046" height="964" alt="image" src="https://github.com/user-attachments/assets/304531b0-888e-40d5-b4b8-0eccd3a27460" />
+
+</p>
+
 The model consists of the following tables:
 
 - **`campaigns`** — Campaign-level information and budget.
